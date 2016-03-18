@@ -1,0 +1,4 @@
+Avg Win CS: 742
+Avg Win Kill: 34
+Avg Lose CS: 695
+Avg Lose Kill: 22
