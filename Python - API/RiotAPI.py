@@ -18,7 +18,7 @@ class RiotAPI(object):
         if RiotAPI.callCounter%7==0:
             print "running... " + str(RiotAPI.callCounter)
             
-            time.sleep(11)
+            time.sleep(12)
         args = {'api_key': self.api_key}
         for key, value in params.items():
             if key not in args:

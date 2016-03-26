@@ -10,7 +10,7 @@ import time
 ##    5. get one from gameid list (in: list of gameid, out: void)
 ##    6. repeat 2-5
 
-user_api_key = '' # insert api key here
+user_api_key = '737ac1b1-254c-49a7-b540-6457248982c2' # insert api key here
 global_mid_list = []
 global_sid_list = []
 api = RiotAPI(user_api_key)
@@ -64,34 +64,40 @@ def getMatchData(mid_index, write_file):
                           '^' + str(p['stats']['kills']) + '^' + str(p['stats']['deaths']) + \
                           '^' + str(p['stats']['assists'])
             if matchDuration > 600:
-                write_line += '^' + str(p['timeline']['creepsPerMinDeltas']['zeroToTen'])
+                write_line += '^' + str(p['timeline']['creepsPerMinDeltas']['zeroToTen']) + \
+                                '^' + str(p['timeline']['goldPerMinDeltas']['zeroToTen'])                              
             else:
-                write_line += '^' + str(0)
+                write_line += '^' + str(0) + '^' + str(0)
             if matchDuration > 1200:
-                write_line += '^' + str(p['timeline']['creepsPerMinDeltas']['tenToTwenty'])
+                write_line += '^' + str(p['timeline']['creepsPerMinDeltas']['tenToTwenty']) + \
+                                '^' + str(p['timeline']['goldPerMinDeltas']['tenToTwenty'])
             else:
-                write_line += '^' + str(0)
+                write_line += '^' + str(0) + '^' + str(0)
             if matchDuration > 1800:
-                write_line += '^' + str(p['timeline']['creepsPerMinDeltas']['twentyToThirty'])
+                write_line += '^' + str(p['timeline']['creepsPerMinDeltas']['twentyToThirty']) + \
+                                '^' + str(p['timeline']['goldPerMinDeltas']['twentyToThirty'])
             else:
-                write_line += '^' + str(0)
+                write_line += '^' + str(0) + '^' + str(0)
         else:
             write_line_b += '^' + p['timeline']['lane'] + '^' + p['timeline']['role'] + \
                             '^' + str(p['stats']['minionsKilled']+p['stats']['neutralMinionsKilled']) + \
                             '^' + str(p['stats']['kills']) + '^' + str(p['stats']['deaths']) + \
                             '^' + str(p['stats']['assists'])
             if matchDuration > 600:
-                write_line_b += '^' + str(p['timeline']['creepsPerMinDeltas']['zeroToTen'])
+                write_line_b += '^' + str(p['timeline']['creepsPerMinDeltas']['zeroToTen']) + \
+                                '^' + str(p['timeline']['goldPerMinDeltas']['zeroToTen'])                              
             else:
-                write_line_b += '^' + str(0)
+                write_line_b += '^' + str(0) + '^' + str(0)
             if matchDuration > 1200:
-                write_line_b += '^' + str(p['timeline']['creepsPerMinDeltas']['tenToTwenty'])
+                write_line_b += '^' + str(p['timeline']['creepsPerMinDeltas']['tenToTwenty']) + \
+                                '^' + str(p['timeline']['goldPerMinDeltas']['tenToTwenty'])
             else:
-                write_line_b += '^' + str(0)
+                write_line_b += '^' + str(0) + '^' + str(0)
             if matchDuration > 1800:
-                write_line_b += '^' + str(p['timeline']['creepsPerMinDeltas']['twentyToThirty'])
+                write_line_b += '^' + str(p['timeline']['creepsPerMinDeltas']['twentyToThirty']) + \
+                                '^' + str(p['timeline']['goldPerMinDeltas']['twentyToThirty'])
             else:
-                write_line_b += '^' + str(0)
+                write_line_b += '^' + str(0) + '^' + str(0)
                 
     write_line += write_line_b
     if rank_tier.index(max(rank_tier)) == 0:
@@ -122,10 +128,10 @@ def loop(write_file, initial_mid_index=0):
     try:
         mid_index = initial_mid_index
         if mid_index==0:
-            sid = getFirstId('luxess') # seed player
+            sid = getFirstId('anniebot') # seed player
             mid_set = getRecentGames(sid)['matches']
             addMatchIdToData(mid_set)
-        while mid_index<3000:
+        while mid_index<3000: # number of games
             if mid_index%5==0 and mid_index!=0:
                 mid_set = getRecentGames(global_sid_list[mid_index/5])['matches']
                 addMatchIdToData(mid_set)
@@ -135,12 +141,13 @@ def loop(write_file, initial_mid_index=0):
     except KeyError:
         print "Key Error"
         time.sleep(15)
+        mid_index +=1
         loop(write_file, mid_index)
         
 
 def main(initial_mid_index=0):
     try:
-        write_file = open('RiotGoldData.txt', 'a')
+        write_file = open('RiotChallengerData.txt', 'a') # output file
         loop(write_file)
     finally:
         write_file.close()

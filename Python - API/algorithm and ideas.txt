@@ -1,0 +1,32 @@
+I have
+1. kda vs time of teams
+2. kda vs time of random player
+3. cs vs time of teams
+4. cs vs time of random player
+
+I want
+1. stats at 10/20/30 min (team) (bronze/silver/gold..)
+	a. cs diff vs win
+	b. kda vs win
+	c. gold diff vs surrender
+	d. said cs diff vs comeback
+2. roles vs items, summoner spells, cs, kd (mllib)
+3. team comp vs winrate (?)
+
+how to do
+1. timeline data = 1
+2. look at creepsPerMinDeltas 
+	a. zeroToTen means 0-10 cs per min avg
+	b. tenToTwenty will not be generated if game < 20 min
+		so only get tenToTwenty if gameLength >1200
+	c. total creep score at 20 = (zeroToTen + tenToTwenty) * 10
+	d. this does not count jungle cs. so only look at mid/top/adc
+3. get highestAchievedSeasonTier
+	a. count per champ (if none, then silver)
+	b. put priority up to low (challenger>bronze)
+4. get inhibitorkill
+	a. if 0, then ff'ed for sure. pretty early too
+	b. if>0, we don't know if ff'ed, but they tried.
+
+737ac1b1-254c-49a7-b540-6457248982c2
+
